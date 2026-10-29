@@ -155,7 +155,7 @@ function App() {
       <main>
         <section className="hero">
           <div className="eyebrow">
-            <span /> HARDWARE, MADE UNDERSTANDABLE{" "}
+            <span /> HARDWARE, MADE UNDERSTANDABLE
             <span className="version">VERILOG → INTERACTIVE</span>
           </div>
           <div className="hero-main">
@@ -207,7 +207,7 @@ function App() {
         <section id="simulator">
           <div className="section-heading">
             <div>
-              <span className="section-number">01 / INTERACTIVE LAB</span>
+              <span className="section-number">INTERACTIVE LAB</span>
               <h2>
                 Inside the processor<span>.</span>
               </h2>
@@ -600,7 +600,6 @@ function App() {
         </section>
         <section id="architecture">
           <Section
-            n="02"
             tag="THE BIG PICTURE"
             title="From instruction to execution."
             text="Explore the actual module boundaries of the Verilog processor."
@@ -609,7 +608,6 @@ function App() {
         </section>
         <section id="circuit-explorer">
           <Section
-            n="03"
             tag="UNDER THE HOOD"
             title="Logic you can look inside."
             text="Explore the real diagrams, then try the arithmetic yourself."
@@ -688,7 +686,6 @@ function App() {
         </section>
         <section id="instruction-set">
           <Section
-            n="04"
             tag="THE LANGUAGE OF THE MACHINE"
             title="16 instructions. Full control."
             text="Every opcode, directly from the instruction decoder and control unit."
@@ -740,7 +737,6 @@ function App() {
         </section>
         <section id="about">
           <Section
-            n="05"
             tag="BUILT FROM FIRST PRINCIPLES"
             title="A small CPU. A complete journey."
             text="From individual logic gates to a running assembly program."
@@ -797,12 +793,10 @@ function App() {
   );
 }
 function Section({
-  n,
   tag,
   title,
   text,
 }: {
-  n: string;
   tag: string;
   title: string;
   text: string;
@@ -811,7 +805,7 @@ function Section({
     <div className="section-heading">
       <div>
         <span className="section-number">
-          {n} / {tag}
+          {tag}
         </span>
         <h2>{title}</h2>
         <p>{text}</p>
