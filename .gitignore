@@ -1,0 +1,50 @@
+# Publish only the two requested projects; preserve the older local sibling.
+/MiniCore4-Portfolio/
+
+# JavaScript dependencies and generated web outputs (at any depth).
+node_modules/
+dist/
+dist-ssr/
+coverage/
+.vite/
+*.tsbuildinfo
+
+# Hardware outputs; retain the SVGs used by the root README and explorers.
+/MiniCore4-Hierarchical/build/*
+!/MiniCore4-Hierarchical/build/*.svg
+*.vcd
+*.fst
+*.vvp
+*.o
+*.out
+
+# Environment files and local secrets; sanitized examples may be committed.
+.env
+.env.*
+!.env.example
+!.env.sample
+*.pem
+*.key
+
+# Local system, editor, agent, and credential configuration.
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+.agents/
+.codex/
+.aws/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# Logs, temporary files, and local-only settings.
+logs/
+*.log
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+*.local

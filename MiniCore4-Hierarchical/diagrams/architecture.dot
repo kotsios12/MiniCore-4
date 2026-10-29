@@ -1,0 +1,37 @@
+digraph CPU {
+ graph [rankdir=LR, bgcolor="#0b1220", pad="0.35", nodesep="0.7", ranksep="1.15", splines=polyline, fontname="Helvetica", label="MINICORE-4  |  Modular RTL Architecture", labelloc=t, fontsize=24, fontcolor="#f8fafc"];
+ node [shape=box, style="rounded,filled", fillcolor="#17263c", color="#4b779c", fontcolor="#f1f5f9", fontname="Helvetica", fontsize=13, margin="0.22,0.18"];
+ edge [color="#91a9c4", fontcolor="#cbd5e1", fontsize=10, arrowsize=0.65];
+ clk [label="CLK / STEP / RESET", fillcolor="#334155"];
+ pc [label="PROGRAM COUNTER\nPC [3:0]",fillcolor="#164e63"];
+ rom [label="PROGRAM ROM\n16 x 8-bit"];
+ dec [label="INSTRUCTION DECODER\nopcode / operand / ALU op"];
+ ctrl [label="CONTROL UNIT\nload / store / jump / halt",fillcolor="#1e3a5f"];
+ acc [label="ACCUMULATOR\nACC [3:0]",fillcolor="#14532d"];
+ b [label="B REGISTER\nB [3:0]",fillcolor="#14532d"];
+ alu [label="4-BIT ALU\nADD / SUB / AND / OR / XOR / NOT",fillcolor="#713f12"];
+ flags [label="ZERO / CARRY FLAGS"];
+ ram [label="DATA RAM\n16 x 4-bit"];
+ out [label="OUTPUT REGISTER\nOUT [3:0]",fillcolor="#14532d"];
+ clk -> pc [label="clock / step"];
+ pc -> rom [label="address [3:0]"];
+ rom -> dec [label="instruction [7:0]"];
+ dec -> ctrl [label="opcode [3:0]"];
+ dec -> alu [label="ALU op [2:0]"];
+ dec -> ram [label="operand / address [3:0]"];
+ dec -> acc [label="immediate [3:0]"];
+ dec -> b [label="immediate [3:0]"];
+ ctrl -> pc [label="jump / halt"];
+ ctrl -> acc [label="write enable"];
+ ctrl -> b [label="write enable"];
+ ctrl -> ram [label="store enable"];
+ ctrl -> out [label="output enable"];
+ acc -> alu [label="A [3:0]"];
+ b -> alu [label="B [3:0]"];
+ alu -> acc [label="result [3:0]"];
+ alu -> flags [label="zero / carry"];
+ flags -> ctrl [label="branch flags"];
+ acc -> ram [label="write data [3:0]"];
+ ram -> acc [label="read data [3:0]"];
+ acc -> out [label="ACC [3:0]"];
+}
