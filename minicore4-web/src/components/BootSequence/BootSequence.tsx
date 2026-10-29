@@ -244,11 +244,11 @@ function ProcessorBoard() {
       <g className="boot-arcs" strokeLinecap="round" strokeLinejoin="round">
         {[
           { delay: 1.35, path: 'M450 256L433 247L439 232L418 236L424 217L402 202', branch: 'M418 236L402 231L395 218' },
-          { delay: 1.73, path: 'M751 280L770 267L764 252L785 256L779 235L799 221', branch: 'M785 256L802 249L811 234' },
-          { delay: 2.12, path: 'M751 352L771 340L765 325L787 329L782 307L802 294', branch: 'M787 329L803 323L811 308' },
-          { delay: 2.95, path: 'M622 180L633 160L620 153L639 135L630 119L642 103', branch: 'M639 135L656 131L666 116' },
-          { delay: 3.34, path: 'M450 400L432 412L438 428L417 424L423 445L403 459', branch: 'M417 424L400 431L392 446' },
-          { delay: 3.72, path: 'M522 481L509 498L522 508L503 523L511 542L491 554', branch: 'M503 523L486 526L477 542' },
+          { delay: 1.65, path: 'M751 280L770 267L764 252L785 256L779 235L799 221', branch: 'M785 256L802 249L811 234' },
+          { delay: 1.95, path: 'M751 352L771 340L765 325L787 329L782 307L802 294', branch: 'M787 329L803 323L811 308' },
+          { delay: 2.25, path: 'M622 180L633 160L620 153L639 135L630 119L642 103', branch: 'M639 135L656 131L666 116' },
+          { delay: 2.55, path: 'M450 400L432 412L438 428L417 424L423 445L403 459', branch: 'M417 424L400 431L392 446' },
+          { delay: 2.85, path: 'M522 481L509 498L522 508L503 523L511 542L491 554', branch: 'M503 523L486 526L477 542' },
         ].map(({delay,path,branch},i)=>(
           <g key={i} className="boot-arc" style={{animationDelay:`${delay}s`}}>
             <path className="boot-arc-halo" d={path}/>
@@ -290,7 +290,7 @@ export default function BootSequence({ children }: { children: ReactNode }) {
       [600, "power"],
       [1600, "initializing"],
       [2700, "ready"],
-      [4300, "reveal"],
+      [3300, "reveal"],
     ];
     const timers = timings.map(([delay, next]) =>
       window.setTimeout(() => setPhase(next), delay),

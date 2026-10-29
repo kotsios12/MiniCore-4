@@ -82,7 +82,7 @@ This application and `../MiniCore4-Hierarchical/` belong to the single **MiniCor
 
 ## Cinematic startup
 
-`src/components/BootSequence/BootSequence.tsx` wraps the existing app in `main.tsx` without changing simulator logic. The app mounts immediately under a fixed, almost-black overlay. SVG/CSS draws a metallic processor, routed electrical pulses, pins, internal traces, and staged illumination. The 4.9-second sequence advances through offline (0–0.6s), electrical activation (0.6–1.6s), initialization (1.6–2.7s), ready (2.7–4.3s), and a 0.6-second reveal. POWER/CLOCK/ALU/MEMORY indicators are explicitly decorative, not hardware diagnostics.
+`src/components/BootSequence/BootSequence.tsx` wraps the existing app in `main.tsx` without changing simulator logic. The app mounts immediately under a fixed, almost-black overlay. SVG/CSS draws a metallic processor, routed electrical pulses, pins, internal traces, and staged illumination. The 3.9-second sequence advances through offline (0–0.6s), electrical activation (0.6–1.6s), initialization (1.6–2.7s), ready (2.7–3.3s), and a 0.6-second reveal. POWER/CLOCK/ALU/MEMORY indicators are explicitly decorative, not hardware diagnostics.
 
 `bootSession.ts` uses `sessionStorage` key `minicore4_boot_seen`. The marker is written when the intro starts, so refresh during playback does not restart it. Standard tab session storage behavior applies: independent new tabs start fresh; browsers may copy session storage when duplicating a tab or opening one with an opener. Denied storage falls back to once per loaded page; persistence across refresh is unavailable in that case.
 
