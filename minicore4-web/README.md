@@ -66,7 +66,7 @@ Instructions are `[opcode:4][operand:4]`. The 16 opcodes are NOP, LDI, LDB, ADD,
 
 ## Verification
 
-`npm test` runs 11 test groups, covering reset, all 256 instruction decodings, arithmetic and borrow, exhaustive bitwise cases, RAM, flag retention, branches, wrap, halt, assembler validity/errors and all bundled examples.
+`npm test` runs 11 CPU/assembler/RTL test groups plus 5 boot-session tests, covering reset, all 256 instruction decodings, arithmetic and borrow, exhaustive bitwise cases, RAM, flag retention, branches, wrap, halt, assembler validity/errors and all bundled examples.
 
 Differential simulation first checks that the published source copy is byte-for-byte identical to the authoritative hardware RTL, then compiles the copied RTL with Icarus Verilog and compares **3,457** results/state snapshots: all 1,536 ALU input/operation combinations, 48 deterministic random program traces, every opcode at every operand nibble, and reset with retained RAM. Full snapshots include PC, A, B, output, all flags, instruction wire and every RAM cell. The original unchanged addition testbench is also compiled and run in a temporary directory and confirms:
 
@@ -74,8 +74,18 @@ Differential simulation first checks that the published source copy is byte-for-
 PASS: 5 + 3 = 8; OUT=8; HLT holds CPU
 ```
 
-No emulator/RTL discrepancies were found. These finite simulation checks are not formal verification. TypeScript checks and production build pass. Browser automation is unavailable in this environment; visual behavior and native fullscreen/clipboard support still need a manual browser check. Fullscreen and clipboard depend on browser permissions and support; clipboard failures are shown in the source panel.
+No emulator/RTL discrepancies were found. These finite simulation checks are not formal verification. TypeScript checks and production build pass. The startup sequence was checked in headless Chrome at desktop and mobile sizes, including first visit, refresh, fresh tab, skip/focus restoration, reduced motion, storage denial, overlay removal and simulator addition after reveal. Native fullscreen/clipboard support still needs a manual browser check. Fullscreen and clipboard depend on browser permissions and support; clipboard failures are shown in the source panel.
 
 ## Repository publication
 
 This application and `../MiniCore4-Hierarchical/` belong to the single **MiniCore-4** repository. See the [root project README](../README.md) for the portfolio overview and combined setup. The license is pending the owner's decision. Current asset paths expect domain-root hosting; GitHub Pages project-subpath deployment is not configured.
+
+## Cinematic startup
+
+`src/components/BootSequence/BootSequence.tsx` wraps the existing app in `main.tsx` without changing simulator logic. The app mounts immediately under a fixed, almost-black overlay. SVG/CSS draws a metallic processor, routed electrical pulses, pins, internal traces, and staged illumination. The 4.9-second sequence advances through offline (0–0.6s), electrical activation (0.6–1.6s), initialization (1.6–2.7s), ready (2.7–4.3s), and a 0.6-second reveal. POWER/CLOCK/ALU/MEMORY indicators are explicitly decorative, not hardware diagnostics.
+
+`bootSession.ts` uses `sessionStorage` key `minicore4_boot_seen`. The marker is written when the intro starts, so refresh during playback does not restart it. Standard tab session storage behavior applies: independent new tabs start fresh; browsers may copy session storage when duplicating a tab or opening one with an opener. Denied storage falls back to once per loaded page; persistence across refresh is unavailable in that case.
+
+Skip cancels phase advancement and fades out in 180ms. Reduced motion bypasses the overlay immediately; changing that preference during playback also dismisses it. The underlying page is inert and hidden from assistive technology only while the intro is visible. The skip button stays keyboard accessible without a focus trap, with focus restored to the page if it was on the disappearing button. All phase/reveal timers and the media-query listener are cleaned up on completion, skip, or unmount. No frame loop, video, canvas, new dependencies, or hardware changes are introduced.
+
+The five boot-session unit tests cover fresh/seen sessions, reduced motion, storage errors, and independent tabs. Run with the existing `npm test` command. To replay manually, clear only `minicore4_boot_seen` from the tab's Session Storage in browser developer tools and refresh.

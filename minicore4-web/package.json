@@ -8,7 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "node --test scripts/test.mjs",
+    "test": "node --test scripts/test.mjs scripts/boot-session.test.mjs",
     "typecheck": "tsc -b --pretty false"
   },
   "dependencies": {

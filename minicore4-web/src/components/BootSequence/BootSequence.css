@@ -1,0 +1,123 @@
+.boot-page { min-height: 100vh; }
+.boot-page:focus { outline: none; }
+.boot-sequence {
+  --boot-cyan: #72edda;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  overflow: hidden;
+  isolation: isolate;
+  background: #060c13;
+  color: #a0b2c0;
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+}
+.boot-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 50% 48%, transparent 15%, #060c1340 55%, #060c13e8 100%);
+}
+.boot-topline, .boot-bottomline {
+  position: absolute;
+  left: clamp(22px, 4vw, 64px);
+  right: clamp(22px, 4vw, 64px);
+  z-index: 3;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.boot-topline { top: max(30px, env(safe-area-inset-top)); font-size: 9px; letter-spacing: 1.7px; color: #45616e; animation: boot-arrive .8s .2s both; }
+.boot-topline b { font-weight: normal; color: #345248; padding: 0 10px; }
+.boot-wordmark { font-family: inherit; font-size: 12px; font-weight: 600; letter-spacing: 2px; color: #b5c6ca; }
+.boot-wordmark > span { color: #68b9ab; margin-left: 3px; }
+.boot-bottomline { bottom: max(26px, env(safe-area-inset-bottom)); gap: 20px; }
+.boot-bottomline > span { max-width: 70%; font-size: 8px; letter-spacing: 1.1px; line-height: 1.8; color: #49626f; }
+.boot-bottomline b { padding: 0 6px; font-weight: 400; color: #5b857e; }
+button.boot-skip { flex-shrink: 0; color: #8da9b3; border: 1px solid #253a45; border-radius: 3px; background: #0d1a2280; font-family: inherit; font-size: 9px; letter-spacing: 1.1px; padding: 12px 15px; min-height: 44px; gap: 16px; }
+button.boot-skip:hover:not(:disabled) { color: #8ef7de; background: #132d2a; border-color: #3e7e70; }
+.boot-skip > span { font-size: 16px; color: #65c9b4; }
+.boot-scene { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; perspective: 1100px; }
+.boot-board { position: absolute; width: max(100vw, 1080px); height: auto; max-width: 1800px; top: 46%; left: 50%; transform: translate(-50%, -50%); overflow: visible; }
+.boot-grid { animation: boot-grid-in 1.2s ease-out both; }
+.boot-trace-bed { opacity: .45; animation: boot-arrive 1s .2s both; }
+.boot-light-pool { opacity: 0; animation: boot-pool-in 1.1s 1.2s ease-out forwards; }
+.boot-package { transform-box: fill-box; transform-origin: center; animation: boot-chip-in 1s cubic-bezier(.22,.68,.31,1) both; }
+.boot-pins { fill: url(#boot-pin); }
+.boot-pins > g { animation: boot-pin-on .4s var(--pin-delay) ease-out forwards; }
+.boot-pulse { opacity: 0; stroke-dasharray: 15 100; stroke-dashoffset: 15; animation: boot-current .8s ease-in forwards; filter: drop-shadow(0 0 4px #50eac3); }
+.boot-return path { opacity: 0; stroke-dasharray: 20 100; stroke-dashoffset: -100; animation: boot-current-out .8s ease-out forwards; filter: drop-shadow(0 0 3px #5ee8cf); }
+.boot-arc { opacity: 0; animation: boot-discharge .38s ease-out both; }
+.boot-arc-halo { stroke: #37eac8; stroke-width: 7; filter: blur(3px); }
+.boot-arc-core { stroke: #d9fff5; stroke-width: 1.7; filter: drop-shadow(0 0 4px #65ffd5); }
+.boot-arc-branch { stroke: #81f9db; stroke-width: 1; }
+.boot-skipped .boot-arcs { visibility: hidden; }
+.boot-edge { opacity: 0; animation: boot-edge-on .7s 1.55s ease-out forwards; }
+.boot-internal { opacity: .07; animation: boot-inner-on .7s 1.7s ease-out forwards; }
+.boot-symbol { opacity: .08; animation: boot-symbol-on .65s 1.85s ease-out forwards; }
+.boot-chip-name { fill: #58727a; font-size: 27px; font-weight: 500; letter-spacing: 5px; animation: boot-name-on .7s 1.95s ease-out forwards; }
+.boot-chip-label { fill: #4b6973; font-size: 6px; letter-spacing: 2px; animation: boot-label-on .7s 2.05s ease-out forwards; }
+.boot-ripple { opacity: 0; transform-box: fill-box; transform-origin: center; animation: boot-radiate 1s 1.85s ease-out forwards; }
+.boot-readout { position: absolute; top: calc(46% + clamp(170px, 14vw, 252px) + 20px); left: 50%; transform: translateX(-50%); width: min(90vw, 360px); height: 145px; z-index: 2; text-align: center; }
+.boot-offline, .boot-initializing { position: absolute; top: 0; width: 100%; font-size: 9px; letter-spacing: 1.7px; white-space: nowrap; }
+.boot-offline { color: #637f8c; animation: boot-offline 1.6s both; }
+.boot-offline > span { color: #385760; margin: 0 7px; }
+.boot-initializing { opacity: 0; color: #77beaf; animation: boot-arrive .3s 1.6s forwards; }
+.boot-checks { position: absolute; top: 29px; left: 50%; width: 185px; transform: translateX(-50%); display: grid; gap: 9px; }
+.boot-checks > div { display: flex; gap: 10px; opacity: 0; align-items: baseline; color: #6d9296; font-size: 9px; letter-spacing: 1.3px; animation: boot-check-in .25s both; }
+.boot-checks b { font-weight: 400; color: #7ce6c0; }
+.boot-dots { flex: 1; border-bottom: 1px dotted #34544f; }
+.boot-ready { opacity: 0; position: absolute; top: 10px; width: 100%; color: #8cf7d8; font-size: 14px; font-weight: 500; letter-spacing: 4px; text-shadow: 0 0 17px #53e1b870; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 12px; }
+.boot-ready i { width: 5px; height: 5px; background: #85ebc5; border-radius: 50%; box-shadow: 0 0 10px #56e7be60; }
+.boot-ready small { width: 100%; display: block; font-size: 7px; letter-spacing: 2.6px; color: #557c79; text-shadow: none; margin-top: 6px; }
+.boot-sequence[data-phase='ready'] .boot-ready, .boot-sequence[data-phase='reveal'] .boot-ready { opacity: 1; transition: opacity .35s ease-out; }
+.boot-sequence[data-phase='ready'] .boot-checks, .boot-sequence[data-phase='ready'] .boot-initializing,
+.boot-sequence[data-phase='reveal'] .boot-checks, .boot-sequence[data-phase='reveal'] .boot-initializing { visibility: hidden; }
+.boot-sequence[data-phase='reveal'] { animation: boot-depart .6s ease-in-out forwards; pointer-events: none; }
+.boot-sequence[data-phase='reveal'] .boot-scene { transform: scale(1.055); transition: transform .6s ease-in-out; }
+.boot-sequence.boot-skipped { animation-duration: .18s; }
+.boot-skipped .boot-board *, .boot-skipped .boot-readout * { animation-play-state: paused; }
+.boot-skipped .boot-readout { opacity: 0; }
+.boot-sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+@keyframes boot-arrive { from { opacity: 0; } to { opacity: 1; } }
+@keyframes boot-grid-in { from { opacity: 0; } to { opacity: .75; } }
+@keyframes boot-chip-in { from { opacity: 0; transform: translateY(10px) scale(.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes boot-pool-in { to { opacity: 1; } }
+@keyframes boot-pin-on { to { fill: #8dcfc6; filter: drop-shadow(0 0 2px #57e9c77a); } }
+@keyframes boot-current { 0% { opacity: 0; stroke-dashoffset: 15; } 15% { opacity: .8; } 75% { opacity: .9; } 100% { opacity: 0; stroke-dashoffset: -100; } }
+@keyframes boot-current-out { 0% { opacity: 0; stroke-dashoffset: -100; } 15% { opacity: .7; } 75% { opacity: .5; } 100% { opacity: 0; stroke-dashoffset: 20; } }
+@keyframes boot-discharge { 0% { opacity: 0; } 12% { opacity: 1; } 35% { opacity: .8; } 100% { opacity: 0; } }
+@keyframes boot-edge-on { to { opacity: .7; filter: drop-shadow(0 0 4px #41dcb580); } }
+@keyframes boot-inner-on { to { opacity: .45; } }
+@keyframes boot-symbol-on { to { opacity: 1; filter: drop-shadow(0 0 5px #4ce1bd90); } }
+@keyframes boot-name-on { to { fill: #c0f1e5; filter: drop-shadow(0 0 5px #4ce1bd35); } }
+@keyframes boot-label-on { to { fill: #6da99e; } }
+@keyframes boot-radiate { 0% { opacity: 0; transform: scale(1); } 15% { opacity: .5; } 100% { opacity: 0; transform: scale(1.4); } }
+@keyframes boot-offline { 0%, 14% { opacity: 0; } 36%, 85% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes boot-check-in { from { opacity: 0; transform: translateY(3px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes boot-depart { from { opacity: 1; } to { opacity: 0; } }
+@media (max-width: 700px) {
+  .boot-board { width: 1060px; top: 42%; }
+  .boot-readout { top: calc(42% + 155px); }
+  .boot-topline { top: max(22px, env(safe-area-inset-top)); }
+  .boot-topline > span:last-child { font-size: 7px; letter-spacing: .7px; max-width: 135px; text-align: right; line-height: 1.7; }
+  .boot-topline b { padding: 0 3px; }
+  .boot-bottomline { bottom: max(20px, env(safe-area-inset-bottom)); }
+  .boot-bottomline > span { max-width: 170px; font-size: 6px; letter-spacing: .7px; }
+  .boot-bottomline b { padding: 0 3px; }
+  button.boot-skip { font-size: 8px; padding: 10px 12px; gap: 10px; }
+  .boot-trace-bed { opacity: .32; }
+  .boot-offline, .boot-initializing { font-size: 8px; letter-spacing: 1.2px; }
+  .boot-checks { width: 170px; }
+}
+@media (max-height: 600px) {
+  .boot-board { width: 780px; top: 39%; }
+  .boot-readout { top: calc(39% + 125px); height: 115px; }
+  .boot-checks { gap: 5px; top: 23px; }
+  .boot-bottomline { bottom: max(12px, env(safe-area-inset-bottom)); }
+  .boot-topline { top: max(14px, env(safe-area-inset-top)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .boot-sequence { display: none; }
+  .boot-sequence *, .boot-sequence { animation: none !important; transition: none !important; }
+}
