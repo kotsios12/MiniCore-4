@@ -31,6 +31,7 @@ import type { CPU, Assembly } from "./simulator/core";
 import CircuitViewer from "./CircuitViewer";
 import SourceViewer from "./SourceViewer";
 import "./App.css";
+import SignalWaveforms from "./components/SignalWaveforms/SignalWaveforms";
 interface Entry {
   before: CPU;
   after: CPU;
@@ -67,6 +68,8 @@ function App() {
     [a, setA] = useState(5),
     [b, setB] = useState(3),
     [op, setOp] = useState(0);
+  const [waveHistory, setWaveHistory] = useState<Entry[]>([]);
+  const [selectedStep, setSelectedStep] = useState<number | null>(null);
   const cpuRef = useRef(cpu);
   const execute = () => {
     const before = cpuRef.current;
@@ -75,6 +78,8 @@ function App() {
     cpuRef.current = after;
     setCpu(after);
     setHistory((h) => [...h.slice(-255), { before, after }]);
+    setWaveHistory((h) => [...h.slice(-255), { before, after }]);
+    setSelectedStep(null);
     if (after.halted) {
       setRunning(false);
       setNotice("CPU halted. Reset to execute again.");
@@ -91,6 +96,8 @@ function App() {
     cpuRef.current = next;
     setCpu(next);
     setHistory([]);
+    setWaveHistory([]);
+    setSelectedStep(null);
   };
   const doReset = () => {
     replace(reset(cpuRef.current.rom, cpuRef.current.ram));
@@ -132,6 +139,7 @@ function App() {
         <nav>
           {[
             "Simulator",
+            "Signal Waveforms",
             "Architecture",
             "Circuit Explorer",
             "Instruction Set",
@@ -575,8 +583,8 @@ function App() {
                   </div>
                 ) : (
                   history.map((e) => (
-                    <details key={e.after.steps}>
-                      <summary>
+                    <details key={e.after.steps} className={selectedStep === e.after.steps ? "wave-selected-history" : ""}>
+                      <summary onClick={() => setSelectedStep(e.after.steps)}>
                         <span className="history-step">
                           {String(e.after.steps).padStart(3, "0")}
                         </span>
@@ -598,6 +606,7 @@ function App() {
             </div>
           </div>
         </section>
+        <SignalWaveforms cpu={cpu} history={waveHistory} selectedStep={selectedStep} onSelectStep={setSelectedStep} onClear={() => { setWaveHistory([]); setSelectedStep(null); }} />
         <section id="architecture">
           <Section
             tag="THE BIG PICTURE"

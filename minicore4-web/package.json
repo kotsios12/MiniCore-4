@@ -8,8 +8,9 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "node --test scripts/test.mjs scripts/boot-session.test.mjs",
-    "typecheck": "tsc -b --pretty false"
+    "test": "node --test scripts/test.mjs scripts/boot-session.test.mjs scripts/waveforms.test.mjs",
+    "typecheck": "tsc -b --pretty false",
+    "waveforms:generate": "node scripts/generate-waveforms.mjs"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.3",
